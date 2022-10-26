@@ -16,6 +16,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - uses: actions/cache@v3.0.11
     - name: Download build script
       run: curl -sf https://gitlab.redox-os.org/redox-os/redox/raw/master/bootstrap.sh -o bootstrap.sh
     - name: Make build script executable
@@ -23,7 +24,7 @@ jobs:
     - name: Run build script
       run: ./bootstrap.sh
     - name: Build the OS
-      run: /redox make all
+      run: ./redox make all
     - name: Upload build artifact
       uses: actions/upload-artifact@v3.1.1
       with:
