@@ -1,0 +1,31 @@
+name: x86_64-BIOS
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Download build script
+      run: curl -sf https://gitlab.redox-os.org/redox-os/redox/raw/master/bootstrap.sh -o bootstrap.sh
+    - name: Make build script executable
+      run: chmod +x bootstrap.sh
+    - name: Run build script
+      run: ./bootstrap.sh
+    - name: Build the OS
+      run: /redox make all
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v3.1.1
+      with:
+        #name:
+        path: redox/build/harddrive.img
