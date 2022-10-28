@@ -23,7 +23,7 @@ jobs:
     - name: Run build script
       run: ./bootstrap.sh
     - name: Build the OS
-      run: ./redox make all
+      run: cd ./redox && make all
     - name: Upload build artifact
       uses: actions/upload-artifact@v3.1.1
       with:
